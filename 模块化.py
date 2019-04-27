@@ -16,13 +16,13 @@ logdir = "{}/run-{}/".format(root_logdir, now)
 n_features = 3
 X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
  
- 个人个人
 def relu(X):
-    w_shape = (int(X.get_shape()[1]), 1)
-    w = tf.Variable(tf.random_normal(w_shape), name="weights")
-    b = tf.Variable(0.0, name="bias")
-    z = tf.add(tf.matmul(X, w), b, name="z")
-    return tf.maximum(z, 0., name="relu")
+	with tf.name_scope("relu"):#增加了命名作用域
+        w_shape = (int(X.get_shape()[1]), 1)
+        w = tf.Variable(tf.random_normal(w_shape), name="weights")
+        b = tf.Variable(0.0, name="bias")
+        z = tf.add(tf.matmul(X, w), b, name="z")
+        return tf.maximum(z, 0., name="relu")
 
 relus = [relu(X) for i in range(5)]
 output = tf.add_n(relus, name="output")
